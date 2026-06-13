@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Witness — Truly Social</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --paper: #f7f5f0;
+      --dim: #8a8778;
+      --accent: #2d5a3d;
+      --warn: #8b3a1a;
+      --border: #d8d4c8;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      max-width: 560px;
+    }
+
+    .project-tag {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .epigraph {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.6;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+      text-align: left;
+    }
+
+    .epigraph cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      color: var(--dim);
+    }
+
+    .experiment {
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .stage {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .stage.active { display: flex; }
+
+    .stage-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .message-box {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      line-height: 1.75;
+      font-size: 16px;
+      font-family: 'IM Fell English', serif;
+    }
+
+    .message-box .speaker {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      padding: 20px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink);
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus { border-color: var(--accent); }
+    textarea::placeholder { color: var(--dim); }
+
+    .instruction {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    button {
+      align-self: flex-start;
+      padding: 12px 28px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: var(--accent); }
+    button:disabled { background: var(--border); color: var(--dim); cursor: not-allowed; }
+
+    .feedback {
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      border-left: 3px solid transparent;
+    }
+
+    .feedback.fail {
+      border-color: var(--warn);
+      background: #fdf5f0;
+      color: var(--warn);
+    }
+
+    .feedback.pass {
+      border-color: var(--accent);
+      background: #f0f5f1;
+      color: var(--accent);
+    }
+
+    .reply-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8px 0;
+    }
+
+    .reflection {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+    }
+
+    .reflection h2 {
+      font-family: 'IM Fell English', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .reflection p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .reflection p:last-child { margin-bottom: 0; }
+
+    .back-link {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      margin-top: 40px;
+      display: inline-block;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .attempt-count {
+      font-size: 12px;
+      color: var(--dim);
+      margin-top: -8px;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 32px 16px; }
+      .message-box { padding: 20px; }
+      .reflection { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="project-tag">Truly Social / Kernel 01</p>
+    <h1>Witness</h1>
+    <blockquote class="epigraph">
+      The opposite of love is not hate. It is indifference.
+      <cite>— Elie Wiesel</cite>
+    </blockquote>
+  </header>
+
+  <div class="experiment">
+
+    <div class="stage active" id="stage-1">
+      <p class="stage-label">Step 1 of 3 — Read</p>
+      <div class="message-box">
+        <p class="speaker">Someone says</p>
+        <p id="the-message"></p>
+      </div>
+      <p class="instruction">Read this. Take your time. When you are ready, continue.</p>
+      <button onclick="goToStage2()">I have read this</button>
+    </div>
+
+    <div class="stage" id="stage-2">
+      <p class="stage-label">Step 2 of 3 — Witness</p>
+      <div class="message-box">
+        <p class="speaker">Someone says</p>
+        <p id="the-message-repeat"></p>
+      </div>
+      <hr class="divider" />
+      <p class="instruction">Before you reply, say back what you heard - in your own words. Not a quote. Not a reaction. What did they actually say?</p>
+      <textarea id="witness-input" placeholder="In your own words, what did they say?" oninput="clearFeedback()"></textarea>
+      <div id="attempt-count" class="attempt-count" style="display:none"></div>
+      <div id="feedback" class="feedback" style="display:none"></div>
+      <button onclick="checkWitness()" id="check-btn">Check my witness</button>
+    </div>
+
+    <div class="stage" id="stage-3">
+      <p class="stage-label">Step 3 of 3 — Respond</p>
+      <div class="message-box">
+        <p class="speaker">Someone says</p>
+        <p id="the-message-final"></p>
+      </div>
+      <div class="feedback pass" id="witness-confirmed"></div>
+      <hr class="divider" />
+      <div class="reply-area">
+        <p class="instruction">Now you may respond.</p>
+        <textarea id="reply-input" placeholder="Your response..."></textarea>
+        <button onclick="complete()">Send response</button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage-4">
+      <div class="reflection">
+        <h2>What just happened</h2>
+        <p>You were asked to demonstrate that you heard before you could respond. That friction - that small pause - is the experiment.</p>
+        <p>On every platform you use, there is no such requirement. The reply box opens the moment you finish reading. Sometimes before.</p>
+        <p>Elie Wiesel argued that to truly witness another person is a moral act - not a technique, not a courtesy. This prototype asks: what if the architecture required it?</p>
+        <p>Notice anything different about the response you wrote?</p>
+      </div>
+      <button onclick="reset()" style="margin-top: 8px;">Try again with a different message</button>
+      <a class="back-link" href="https://github.com/SuperCool83/truly-social">← Truly Social</a>
+    </div>
+
+  </div>
+
+  <script>
+    const messages = [
+      {
+        text: "I've been working on this project for eight months. Everyone keeps telling me it's impressive but I feel like I'm just going through the motions. I don't know if I actually believe in it anymore.",
+        keywords: ["project", "eight months", "impressive", "motions", "believe", "anymore"]
+      },
+      {
+        text: "My father died two years ago and I still haven't told anyone how relieved I was. He was difficult. I loved him and I was relieved and I don't know what to do with both of those things.",
+        keywords: ["father", "died", "relieved", "difficult", "loved", "both"]
+      },
+      {
+        text: "I keep getting passed over for promotion and I can't tell if it's because of something I'm doing wrong or because the system just doesn't work for people like me. Either answer scares me.",
+        keywords: ["promotion", "wrong", "system", "scares", "passed over"]
+      },
+      {
+        text: "I said something to a friend three weeks ago and they haven't replied. I don't know whether to follow up or leave it. I keep going back and forth and it's taking up more of my mind than it should.",
+        keywords: ["friend", "replied", "follow up", "mind", "three weeks", "back and forth"]
+      },
+      {
+        text: "I moved to this city for a relationship that ended six months ago. I've built a life here now. But sometimes I wonder if I'm staying because I want to or because I don't know how to leave.",
+        keywords: ["city", "relationship", "ended", "staying", "leave", "built"]
+      }
+    ];
+
+    let currentMessage = null;
+    let attempts = 0;
+
+    function pickMessage() {
+      return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function init() {
+      currentMessage = pickMessage();
+      attempts = 0;
+      document.getElementById('the-message').textContent = currentMessage.text;
+      document.getElementById('the-message-repeat').textContent = currentMessage.text;
+      document.getElementById('the-message-final').textContent = currentMessage.text;
+    }
+
+    function goToStage2() {
+      setStage('stage-2');
+    }
+
+    function clearFeedback() {
+      const fb = document.getElementById('feedback');
+      fb.style.display = 'none';
+    }
+
+    function checkWitness() {
+      const input = document.getElementById('witness-input').value.trim().toLowerCase();
+      const fb = document.getElementById('feedback');
+      const attemptEl = document.getElementById('attempt-count');
+
+      if (input.length < 20) {
+        fb.className = 'feedback fail';
+        fb.textContent = 'Try saying more. What did they actually tell you?';
+        fb.style.display = 'block';
+        return;
+      }
+
+      attempts++;
+
+      const matched = currentMessage.keywords.filter(k => input.includes(k.toLowerCase()));
+      const score = matched.length / currentMessage.keywords.length;
+
+      if (score >= 0.4) {
+        fb.style.display = 'none';
+        const confirmed = document.getElementById('witness-confirmed');
+        confirmed.textContent = 'You demonstrated you heard them. The reply field is now open.';
+        setStage('stage-3');
+      } else {
+        attemptEl.style.display = 'block';
+        attemptEl.textContent = `Attempt ${attempts}`;
+        fb.className = 'feedback fail';
+
+        if (attempts === 1) {
+          fb.textContent = "That's a reaction, not a witness. What did they actually say - their situation, not your response to it?";
+        } else if (attempts === 2) {
+          fb.textContent = "Still not quite there. Try to capture the specific thing they told you - the details, not just the feeling.";
+        } else {
+          fb.textContent = "Keep going. What were the concrete things they said? The facts of their situation, in your own words.";
+        }
+        fb.style.display = 'block';
+      }
+    }
+
+    function complete() {
+      setStage('stage-4');
+    }
+
+    function reset() {
+      document.getElementById('witness-input').value = '';
+      document.getElementById('reply-input').value = '';
+      document.getElementById('feedback').style.display = 'none';
+      document.getElementById('attempt-count').style.display = 'none';
+      init();
+      setStage('stage-1');
+    }
+
+    function setStage(id) {
+      document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    init();
+  </script>
+
+</body>
+</html>
