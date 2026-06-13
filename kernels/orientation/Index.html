@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orientation — Truly Social</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@300;400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --paper: #f7f5f0;
+      --dim: #8a8778;
+      --accent: #2d5a3d;
+      --border: #d8d4c8;
+      --warn: #8b3a1a;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      max-width: 560px;
+    }
+
+    .project-tag {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .epigraph {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.6;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+      text-align: left;
+    }
+
+    .epigraph cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      color: var(--dim);
+    }
+
+    .experiment {
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .stage {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .stage.active { display: flex; }
+
+    .stage-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .question-box {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 36px 32px;
+      line-height: 1.75;
+    }
+
+    .question-text {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .instruction {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      padding: 20px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink);
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus { border-color: var(--accent); }
+    textarea::placeholder { color: var(--dim); }
+
+    button {
+      align-self: flex-start;
+      padding: 12px 28px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: var(--accent); }
+
+    .feedback {
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      border-left: 3px solid var(--warn);
+      background: #fdf5f0;
+      color: var(--warn);
+      display: none;
+    }
+
+    .anchor-bar {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .anchor-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .anchor-question {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .anchor-answer {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .interaction-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4px 0;
+    }
+
+    .reflection {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+    }
+
+    .reflection h2 {
+      font-family: 'IM Fell English', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .reflection p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .reflection p:last-child { margin-bottom: 0; }
+
+    .back-link {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      margin-top: 40px;
+      display: inline-block;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .question-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .question-nav button {
+      padding: 8px 16px;
+      font-size: 12px;
+      background: transparent;
+      color: var(--dim);
+      border: 1px solid var(--border);
+    }
+
+    .question-nav button:hover {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .question-counter {
+      font-size: 12px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 32px 16px; }
+      .question-box { padding: 24px 20px; }
+      .reflection { padding: 20px; }
+      .anchor-bar { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="project-tag">Truly Social / Kernel 02</p>
+    <h1>Orientation</h1>
+    <blockquote class="epigraph">
+      We are made for cooperation, like feet, like hands, like eyelids, like the rows of upper and lower teeth.
+      <cite>— Marcus Aurelius, Meditations</cite>
+    </blockquote>
+  </header>
+
+  <div class="experiment">
+
+    <!-- STAGE 1: The question -->
+    <div class="stage active" id="stage-1">
+      <p class="stage-label">Step 1 of 2 — Orient</p>
+      <div class="question-box">
+        <p class="question-text" id="question-display"></p>
+      </div>
+      <div class="question-nav">
+        <button onclick="prevQuestion()">← Different question</button>
+        <span class="question-counter" id="question-counter"></span>
+        <button onclick="nextQuestion()">Next question →</button>
+      </div>
+      <p class="instruction">This question is your anchor. Answer it before you interact with anyone today. Not a performance - a genuine reckoning with what you are bringing into this space.</p>
+      <textarea id="orientation-input" placeholder="Answer honestly. No one else will see this." oninput="clearFeedback()"></textarea>
+      <div id="feedback" class="feedback"></div>
+      <button onclick="goToStage2()">I am oriented</button>
+    </div>
+
+    <!-- STAGE 2: Now interact, with anchor visible -->
+    <div class="stage" id="stage-2">
+      <p class="stage-label">Step 2 of 2 — Interact</p>
+
+      <div class="anchor-bar">
+        <span class="anchor-label">Your orientation today</span>
+        <p class="anchor-question" id="anchor-question-display"></p>
+        <p class="anchor-answer" id="anchor-answer-display"></p>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="interaction-area">
+        <p class="instruction">Your anchor stays visible. Now interact - say what you came to say.</p>
+        <textarea id="interaction-input" placeholder="What do you want to put into this space today?"></textarea>
+        <button onclick="complete()">Done</button>
+      </div>
+    </div>
+
+    <!-- STAGE 3: Reflection -->
+    <div class="stage" id="stage-3">
+      <div class="reflection">
+        <h2>What just happened</h2>
+        <p>Before you could say anything, you were asked what you owe the people you are about to encounter. That question is the experiment.</p>
+        <p>Marcus Aurelius began every day with this kind of reckoning - not as inspiration, but as discipline. You have no business engaging with others, he argued, until you have asked what your role is and what you bring.</p>
+        <p>Current platforms open immediately to the feed. No pause, no orientation, no question about what you are carrying in. The architecture assumes you are ready. You may not be.</p>
+        <p>Did your answer change what you wrote? Did holding the question visible while you interacted feel different from the usual experience?</p>
+      </div>
+      <button onclick="reset()" style="margin-top: 8px;">Try a different question</button>
+      <a class="back-link" href="https://github.com/SuperCool83/truly-social">← Truly Social</a>
+    </div>
+
+  </div>
+
+  <script>
+    const questions = [
+      "What do you owe the people you are about to encounter?",
+      "What are you bringing into this space - and is it yours to bring?",
+      "Are you here to cooperate or to perform?",
+      "What would you want from others today - and are you prepared to offer it first?",
+      "What assumption are you carrying in that you have not examined?",
+      "Is what you are about to say in service of connection or in service of being seen?",
+      "What would it mean to leave this space better than you found it?"
+    ];
+
+    let currentIndex = 0;
+    let chosenQuestion = '';
+    let chosenAnswer = '';
+
+    function init() {
+      currentIndex = Math.floor(Math.random() * questions.length);
+      updateQuestion();
+    }
+
+    function updateQuestion() {
+      document.getElementById('question-display').textContent = questions[currentIndex];
+      document.getElementById('question-counter').textContent = `${currentIndex + 1} of ${questions.length}`;
+    }
+
+    function nextQuestion() {
+      currentIndex = (currentIndex + 1) % questions.length;
+      updateQuestion();
+    }
+
+    function prevQuestion() {
+      currentIndex = (currentIndex - 1 + questions.length) % questions.length;
+      updateQuestion();
+    }
+
+    function clearFeedback() {
+      document.getElementById('feedback').style.display = 'none';
+    }
+
+    function goToStage2() {
+      const input = document.getElementById('orientation-input').value.trim();
+      const fb = document.getElementById('feedback');
+
+      if (input.length < 15) {
+        fb.textContent = 'Take a moment with it. A genuine answer, however short.';
+        fb.style.display = 'block';
+        return;
+      }
+
+      chosenQuestion = questions[currentIndex];
+      chosenAnswer = input;
+
+      document.getElementById('anchor-question-display').textContent = chosenQuestion;
+      document.getElementById('anchor-answer-display').textContent = chosenAnswer;
+
+      setStage('stage-2');
+    }
+
+    function complete() {
+      setStage('stage-3');
+    }
+
+    function reset() {
+      document.getElementById('orientation-input').value = '';
+      document.getElementById('interaction-input').value = '';
+      document.getElementById('feedback').style.display = 'none';
+      init();
+      setStage('stage-1');
+    }
+
+    function setStage(id) {
+      document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    init();
+  </script>
+
+</body>
+</html>
