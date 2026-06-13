@@ -40,6 +40,7 @@ Each kernel is an independent experiment. A philosophical claim. A simple workin
 | Kernel | Claim | Status |
 |--------|-------|--------|
 | [witness](./kernels/witness) | You cannot respond to what you have not heard | `v0.1` |
+| [orientation](./kernels/orientation) | Naming your intention before you enter changes how you behave | `planned` |
 | [delay](./kernels/delay) | Friction between thought and broadcast changes what gets said | `planned` |
 | [meaning-check](./kernels/meaning-check) | Naming the purpose of a post changes whether you send it | `planned` |
 | [tribal-mirror](./kernels/tribal-mirror) | Language shifts when identity is threatened - making it visible changes behaviour | `planned` |
