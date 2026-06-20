@@ -7,7 +7,9 @@
 
 We have social media. We do not yet have truly social media.
 
-This project is an open inquiry into that gap - built as working experiments, not arguments. Each kernel takes one philosophical claim about what human connection actually requires and makes it tangible through interaction. You use it, you feel the friction, you understand something that no essay could quite land.
+This project is an open inquiry into that gap - built as working experiments, not arguments. Each kernel takes one philosophical claim about what human connection actually requires and makes it tangible through interaction. You use it, you feel the friction, you understand something that no essay could quite land. 
+
+This project invites participants to harness AI and encourages purpiseful philosophical experiments with technology.
 
 ---
 
